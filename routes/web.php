@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\LanguageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,8 @@ Route::middleware(['auth', 'verified'])
         ->name('dashboard');
         Route::resource('projects', ProjectController::class)->parameters(['projects' => 'project:slug']);
         Route::resource('categories', CategoryController::class)->parameters(['categories' => 'category:slug'])->except(['edit', 'create']);
+        Route::resource('languages', LanguageController::class)->parameters(['languages' => 'language:slug'])->except(['edit', 'create']);
+
 
 
     });

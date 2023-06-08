@@ -1,9 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Language;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLanguageRequest;
+use App\Http\Requests\UpdateLanguageRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+
 
 class LanguageController extends Controller
 {
@@ -14,7 +20,9 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        //
+        $languages = Language::latest()->paginate(8);
+
+        return view('admin.languages.index', compact('languages'));
     }
 
     /**
@@ -33,9 +41,14 @@ class LanguageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLanguageRequest $request)
     {
-        //
+        $data = $request->validated();
+        $newLang = new Language();
+        $newLang->fill($data);
+        $newLang->slug = Str::slug($newLang->name, '-');
+        $newLang->save();
+        return redirect()->route('admin.languages.index')->with('message', "Il linguaggio $newLang->name è stata aggiunta correttamente");
     }
 
     /**
@@ -46,7 +59,8 @@ class LanguageController extends Controller
      */
     public function show(Language $language)
     {
-        //
+        $projects = $language->with('projects')->paginate(8);
+        return view('admin.languages.show', compact('projects', 'language'));
     }
 
     /**
@@ -67,9 +81,11 @@ class LanguageController extends Controller
      * @param  \App\Models\Language  $language
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Language $language)
+    public function update(UpdateLanguageRequest $request, Language $language)
     {
-        //
+        $data = $request->validated();
+        $language->update($data);
+        return redirect()->route('admin.languages.index')->with('message', "Il linguaggio $language->name è stata aggiornato");
     }
 
     /**
@@ -80,6 +96,8 @@ class LanguageController extends Controller
      */
     public function destroy(Language $language)
     {
-        //
+        $language->delete();
+        return redirect()->route('admin.languages.index')->with('message', "Il linguaggio $language->name è stato cancellato correttamente");
+
     }
 }

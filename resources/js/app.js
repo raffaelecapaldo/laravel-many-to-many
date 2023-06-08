@@ -34,9 +34,11 @@ deleteButton.forEach((button) => {//a tutti i tasti aggiungi eventlistener con f
         if (dataType == "project") {
             modalItemTitleType.textContent = 'il progetto';
         }
-        else {
+        else if (dataType == "category") {
         modalItemTitleType.textContent = 'la categoria';
-
+        }
+        else {
+            modalItemTitleType.textContent = 'il linguaggio';
         }
 
         const buttonDelete = modal.querySelector('button.btn-primary');//seleziona bottone conferma modale
@@ -59,6 +61,7 @@ editButton.forEach((button) => {
     button.addEventListener('click', function() {
         const categorySlug = button.getAttribute('data-item-slug');
         const categoryName = button.getAttribute('data-item-name');
+        const type = button.getAttribute('data-item-type');
 
         const editModal = document.getElementById('editModal');
 
@@ -67,7 +70,13 @@ editButton.forEach((button) => {
 
         const catName = editModal.querySelector('#catname');
         const form = editModal.querySelector('#editcategoryform')
-        form.action = 'categories/' + categorySlug;
+        if (type == "language") {
+            form.action = 'languages/' + categorySlug;
+        }
+        else {
+            form.action = 'categories/' + categorySlug;
+
+        }
         catName.textContent = categoryName;
 
 
