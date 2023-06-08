@@ -18,7 +18,7 @@ Anteprima {{$project->name}}
                 <div class="languages">
                     <h3>Linguaggi utilizzati</h3>
                     @foreach ($project->languages as $language)
-                    <span class="badge text-bg-primary">{{$language->name}}</span>
+                    <span style="background-color: {{$language->badge_color}}" class="badge">{{$language->name}}</span>
                     @endforeach
 
                 </div>
