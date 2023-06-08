@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Project;
 use App\Models\Category;
+use App\Models\Language;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Controllers\Controller;
@@ -31,7 +32,8 @@ class ProjectController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.projects.create', compact('categories'));
+        $languages = Language::all();
+        return view('admin.projects.create', compact('categories', 'languages'));
     }
 
     /**
@@ -47,6 +49,7 @@ class ProjectController extends Controller
         $newProject->fill($data);
         $newProject->slug = Str::slug($newProject->name, '-');
         $newProject->save();
+        $newProject->languages()->attach($request->languages);
 
         return redirect()->route('admin.projects.index')->with('message', "Il progetto $newProject->name è stato aggiunto correttamente");
 
@@ -72,7 +75,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $categories = Category::all();
-        return view('admin.projects.edit', compact('project', 'categories'));
+        $languages = Language::all();
+        return view('admin.projects.edit', compact('project', 'categories', 'languages'));
     }
 
     /**

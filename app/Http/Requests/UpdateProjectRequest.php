@@ -28,7 +28,7 @@ class UpdateProjectRequest extends FormRequest
         return [
             'name' => ['required', 'max:100', Rule::unique('projects')->ignore($this->project)],
             'image_url' => 'required|url',
-            'languages' => 'required|max:255',
+            'languages' => 'required|exists:languages,id',
             'tags' => 'nullable|max:255',
             'description' => 'required',
             'repo_url' => 'nullable|url',

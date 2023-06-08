@@ -27,7 +27,7 @@ class StoreProjectRequest extends FormRequest
         return [
             'name' => 'required|max:100|unique:projects',
             'image_url' => 'required|url',
-            'languages' => 'required|max:255',
+            'languages' => 'required|exists:languages,id',
             'tags' => 'nullable|max:255',
             'description' => 'required',
             'repo_url' => 'nullable|url',
@@ -46,7 +46,9 @@ class StoreProjectRequest extends FormRequest
             'description.required' => 'Una descrizione del progetto è obbligatoria',
             'repo_url.url' => "L'url della repository non è corretto",
             'category_id.required' => 'Si è verificato un erorre relativo alle categorie, riprova',
-            'category_id.exists' => 'Si è verificato un erorre relativo alle categorie, riprova'
+            'category_id.exists' => 'Si è verificato un erorre relativo alle categorie, riprova',
+            'languages.required' => 'Selezionare almeno un linguaggio di programmazione',
+            'languages.exists' => 'Si è verificato un errore nella scelta del linguaggi, riprovare'
 
 
 

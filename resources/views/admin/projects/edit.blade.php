@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-4">
+            <div class="col-6">
                 <label for="category_id" class="form-label">Categoria</label>
                <select class="form-control @error('category_id') is-invalid @enderror" name="category_id">
                 @foreach ($categories as $category)
@@ -48,16 +48,8 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="col-4">
-                <label for="languages" class="form-label">Linguaggi</label>
-                <input type="text" required maxlength="255" name="languages"
-                    class="form-control @error('languages') is-invalid @enderror" value="{{ old('languages', $project->languages) }}"
-                    placeholder="Linguaggi usati">
-                @error('languages')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="col-4">
+
+            <div class="col-6">
                 <label for="tags" class="form-label">Tags</label>
                 <input type="text" maxlength="255" name="tags"
                     class="form-control @error('tags') is-invalid @enderror" value="{{ old('tags', $project->tags) }}"
@@ -67,6 +59,32 @@
                 @enderror
             </div>
         </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="col-4">
+                    <p>Linguaggi usati</p>
+                    @foreach ($languages as $language)
+                    <div class="form-check form-check-inline">
+                        @if ($errors->any())
+                        <input name="languages[]" class="form-check-input" type="checkbox" value="{{$language->id}}"
+                        {{in_array($language->id, old('languages', [])) ? 'checked' : ''}}>
+                        @else
+                        <input name="languages[]" class="form-check-input" type="checkbox" value="{{$language->id}}"
+                        {{$project->languages->contains($language) ? 'checked' : ''}}>
+                        @endif
+
+                        <p>{{$language->name}}</p>
+                      </div>
+
+                    @endforeach
+
+
+                </div>
+            </div>
+        </div>
+        @error('languages[]')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                  @enderror
         <div class="row d-flex justify-content-center mt-3">
             <div class="col-8">
                 <label for="description" class="form-label">Descrizione</label>

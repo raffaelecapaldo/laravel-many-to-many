@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
-    protected $guarded = [];
+    protected $guarded = ['languages'];
 
     public function category() {
       return $this->belongsTo(Category::class);
