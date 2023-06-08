@@ -90,6 +90,7 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $project->update($data);
+        $project->languages()->sync($request->languages);
         return redirect()->route('admin.projects.index')->with('message', "Il progetto $project->name è stato modificato correttamente");
     }
 
