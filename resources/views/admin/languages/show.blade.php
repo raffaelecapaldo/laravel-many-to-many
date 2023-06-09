@@ -22,13 +22,13 @@
               </tr>
             </thead>
             <tbody>
-                @forelse ($projects as $project)
+                @forelse ($language->projects as $project)
                 <tr class="align-middle">
                     <th scope="row">{{$project->id}}</th>
                     <td>{{$project->name}}</td>
                     <td><img class="preview img-thumbnail" src="{{$project->image_url}}" alt="{{$project->name}}"></td>
                     <td><a href="{{$project->repo_url}}">{{"$project->name Github"}}</a></td>
-                    <td>{{$project->language->name}}</td>
+                    <td>{{$project->category->name}}</td>
 
                     <td>
                         <button class="btn btn-success"><a class="text-white" href="{{route('admin.projects.show', $project->slug)}}"><i class="fa-solid fa-eye"></i></a></button>

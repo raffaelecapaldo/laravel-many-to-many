@@ -59,7 +59,8 @@ class LanguageController extends Controller
      */
     public function show(Language $language)
     {
-        $projects = $language->with('projects')->paginate(8);
+        $projects = $language->with('projects.category')->paginate(8);
+        //dd($projects);
         return view('admin.languages.show', compact('projects', 'language'));
     }
 
